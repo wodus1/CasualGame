@@ -18,19 +18,14 @@ public class knockback : MonoBehaviour
         audio = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("enemy"))
         {
-            rigid.velocity = (transform.position - collision.transform.position) * 4;
+            Vector3 force = (transform.position - collision.transform.position) * 4;
+            rigid.AddForce(force, ForceMode.Impulse);
             audio.PlayOneShot(collide);
-            Invoke("ResetRigid", 0.5f);
+            ResetRigid();
         }
 
         if (collision.gameObject.CompareTag("ground"))
